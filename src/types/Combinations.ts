@@ -1,14 +1,23 @@
-export type inputs = {
-    span: number
+/**
+ * Units Inputs
+ * @property crossSectionArea - Unit: m²
+ * @property span - Unit: m
+ * @property actions - Unit: kN/m
+ * @property reductionFactors - Units: dimensionless
+ * @property ponderationsFactors - Unit: dimensionless
+ */
+
+export type inputs = { 
+    span: number 
     actions: actions
     reductionFactors: reductionFactors
     ponderationFactors: ponderationsFactors
 }
 
 export type actions = {
-    g1: number
-    g2: number
-    q: number
+    g1: number 
+    g2: number 
+    q: number 
 }
 
 export type reductionFactors = {
@@ -23,10 +32,11 @@ export type ponderationsFactors = {
 }
 
 export interface ICombinations {
-    actions: actions,
-    reductionFactors: reductionFactors,
-    ponderationFactors: ponderationsFactors
+    inputs: inputs,
+    combinationsELS: OutputCombinationsELS,
+    combinationELU: OutputCombinationELU
 }
+
 
 export type InputsCombinationsELS = {
     actions: actions,
@@ -37,6 +47,12 @@ export type InputsCombinationsELU = {
     actions: actions,
     ponderationFactors: ponderationsFactors
 }
+
+/**
+ * Unit Outputs
+ * @property OutputCombinationsELS - Units: kN/m
+ */
+
 
 export type OutputCombinationsELS = {
     almostPermanent: {
@@ -52,6 +68,11 @@ export type OutputCombinationsELS = {
         min: number
     }
 }
+
+/**
+ * Unit Outputs
+ * @property OutputCombinationELU - Units: kN/m
+ */
 
 export type OutputCombinationELU = {
     last: {
