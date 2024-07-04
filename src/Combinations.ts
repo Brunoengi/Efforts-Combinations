@@ -1,11 +1,11 @@
-import { type InputsCombinationsELS, type InputsCombinationsELU, inputs, OutputCombinationsELS, OutputCombinationELU, ICombinations } from "./types/Combinations"
+import { type InputsCombinationsELS, type InputsCombinationsELU, type inputs, type OutputCombinationsELS, type OutputCombinationELU, type ICombinations } from './types/Combinations'
 
-class Combinations implements ICombinations{
-  private _inputs: inputs
-  private _combinationsELS: OutputCombinationsELS
-  private _combinationELU: OutputCombinationELU
+class Combinations implements ICombinations {
+  private readonly _inputs: inputs
+  private readonly _combinationsELS: OutputCombinationsELS
+  private readonly _combinationELU: OutputCombinationELU
 
-  constructor({ span, actions, reductionFactors, ponderationFactors }: inputs) {
+  constructor ({ span, actions, reductionFactors, ponderationFactors }: inputs) {
     this._inputs = {
       span,
       actions,
@@ -16,35 +16,31 @@ class Combinations implements ICombinations{
     this._combinationELU = this.calculateCombinationELU({ actions, ponderationFactors })
   }
 
-  get actions() {
+  get actions (): inputs['actions'] {
     return this._inputs.actions
   }
 
-  get reductionFactors() {
+  get reductionFactors (): inputs['reductionFactors'] {
     return this._inputs.reductionFactors
   }
 
-  get ponderationFactors() {
+  get ponderationFactors (): inputs['ponderationFactors'] {
     return this._inputs.ponderationFactors
   }
 
-  get inputs() {
+  get inputs (): inputs {
     return this._inputs
   }
 
-  get combinationsELS() {
+  get combinationsELS (): OutputCombinationsELS {
     return this._combinationsELS
   }
 
-  get combinationELU() {
+  get combinationELU (): OutputCombinationELU {
     return this._combinationELU
   }
 
-  set g1(g1: number) {
-    this._inputs.actions.g1 = g1
-  }
-
-  calculateCombinationsELS({ actions, reductionFactors }: InputsCombinationsELS): OutputCombinationsELS {
+  calculateCombinationsELS ({ actions, reductionFactors }: InputsCombinationsELS): OutputCombinationsELS {
     const { g1, g2, q } = actions
     const { psi1, psi2 } = reductionFactors
 
@@ -64,7 +60,7 @@ class Combinations implements ICombinations{
     }
   }
 
-  calculateCombinationELU({ actions, ponderationFactors }: InputsCombinationsELU): OutputCombinationELU {
+  calculateCombinationELU ({ actions, ponderationFactors }: InputsCombinationsELU): OutputCombinationELU {
     const { g1, g2, q } = actions
     const { gamag1, gamag2, gamaq } = ponderationFactors
 
