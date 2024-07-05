@@ -1,11 +1,11 @@
 import Combinacoes from '../src/Combinations'
-import { type ICombinations } from '../src/types/Combinations';
+import { type ICombinations } from '../src/interfaces/ICombinations';
 
 describe('Checks abouts combination class', () => {
-  let example1: ICombinations
+  let example: ICombinations
 
   beforeAll(() => {
-    example1 = new Combinacoes({
+    example = new Combinacoes({
       actions: {
         g1: 3,
         g2: 5,
@@ -25,16 +25,28 @@ describe('Checks abouts combination class', () => {
   });
 
   test('Check that there are no undefined or null properties', () => {
-    for (const key of Object.keys(example1 as ICombinations)) {
-      expect(example1[key as keyof ICombinations]).not.toBeNull();
-      expect(example1[key as keyof ICombinations]).not.toBeUndefined();
+    for (const key of Object.keys(example as ICombinations)) {
+      expect(example[key as keyof ICombinations]).not.toBeNull();
+      expect(example[key as keyof ICombinations]).not.toBeUndefined();
     }
   });
   test('Check ELU max and min values', () => {
-    expect(example1.combinationELU.last.max).toBeCloseTo(1.4 * (example1.inputs.actions.g1 + example1.inputs.actions.g2 + example1.inputs.actions.q));
-    expect(example1.combinationELU.last.min).toBeCloseTo(1.4 * (example1.inputs.actions.g1 + example1.inputs.actions.g2));
+    expect(example.combinationELU.last.max).toBeCloseTo(((example.inputs.ponderationFactors.gamag1 * example.inputs.actions.g1) + (example.inputs.ponderationFactors.gamag2 * example.inputs.actions.g2) + (example.inputs.ponderationFactors.gamaq * example.inputs.actions.q)))
+    expect(example.combinationELU.last.min).toBeCloseTo(1.4 * (example.inputs.actions.g1 + example.inputs.actions.g2));
   });
-  test('psi1 must be greater than psi1', () => {
-    expect(example1.inputs.reductionFactors.psi1).toBeGreaterThan(example1.inputs.reductionFactors.psi2)
+  test('Check ELS values - almost Permanent', () => {
+    expect(example.combinationsELS.almostPermanent.max).toBeCloseTo(example.inputs.actions.g1 + example.inputs.actions.g2 + example.inputs.actions.q * example.inputs.reductionFactors.psi2)
+    expect(example.combinationsELS.almostPermanent.min).toBeCloseTo(example.inputs.actions.g1 + example.inputs.actions.g2)  
+  })
+  test('Check ELS values - Frequent', () => {
+    expect(example.combinationsELS.frequent.max).toBeCloseTo(example.inputs.actions.g1 + example.inputs.actions.g2 + example.inputs.actions.q * example.inputs.reductionFactors.psi1)
+    expect(example.combinationsELS.frequent.min).toBeCloseTo(example.inputs.actions.g1 + example.inputs.actions.g2)
+  })
+  test('Check ELS values - Rare', () => {
+    expect(example.combinationsELS.rare.max).toBeCloseTo(example.inputs.actions.g1 + example.inputs.actions.g2 + example.inputs.actions.q)
+    expect(example.combinationsELS.rare.min).toBeCloseTo(example.inputs.actions.g1 + example.inputs.actions.g2)
+  })
+  test('psi1 must be greater than psi2', () => {
+    expect(example.inputs.reductionFactors.psi1).toBeGreaterThan(example.inputs.reductionFactors.psi2)
   })
 });

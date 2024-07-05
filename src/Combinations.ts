@@ -1,4 +1,4 @@
-import { type InputsCombinationsELS, type InputsCombinationsELU, type inputs, type OutputCombinationsELS, type OutputCombinationELU, type ICombinations } from './types/Combinations'
+import { type InputsCombinationsELS, type InputsCombinationsELU, type inputs, type OutputCombinationsELS, type OutputCombinationELU, type ICombinations } from './interfaces/ICombinations'
 
 class Combinations implements ICombinations {
   private readonly _inputs: inputs

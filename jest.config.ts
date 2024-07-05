@@ -9,7 +9,7 @@ const config: Config = {
 
   clearMocks: true,
   collectCoverage: true,
-  collectCoverageFrom: ["src/GeometricProps.{js,jsx,ts,tsx}"],
+  collectCoverageFrom: ["src/**/*.{js,jsx,ts,tsx}"],
   coverageDirectory: "coverage",
   coverageProvider: "babel",
    preset: 'ts-jest',
